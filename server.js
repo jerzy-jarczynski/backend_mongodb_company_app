@@ -12,12 +12,19 @@ mongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUni
   }
   else {
     console.log('Successfully connected to the database');
+    const db = client.db('companyDB');   
+
     const app = express();
 
     app.use(cors());
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
     
+    app.use((req, res, next) => {
+      req.db = db;
+      next();
+    });
+
     app.use('/api', employeesRoutes);
     app.use('/api', departmentsRoutes);
     app.use('/api', productsRoutes);
