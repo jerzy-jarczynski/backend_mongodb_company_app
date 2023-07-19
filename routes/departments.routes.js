@@ -29,7 +29,7 @@ router.post('/departments', (req, res) => {
   req.db.collection('departments').insertOne({ name: name }, (err) => {
     if(err) res.status(500).json({ message: err });
     else if(!name) res.status(400).json({ message: 'Provided argument is invalid' });
-    else res.status(201).json({ message: 'Document add successfully to database' });
+    else res.status(201).json({ message: 'OK' });
   });
 });
 
