@@ -29,9 +29,9 @@ router.get('/employees/random', async (req, res) => {
   try {
     const count = await Employee.countDocuments();
     const rand = Math.floor(Math.random() * count);
-    const dep = await Employee.findOne().skip(rand);
-    if(!dep) res.status(404).json({ message: 'Not found' });
-    else res.json(dep);
+    const emp = await Employee.findOne().skip(rand);
+    if(!emp) res.status(404).json({ message: 'Not found' });
+    else res.json(emp);
   }
   catch(err) {
     res.status(500).json({ message: err });
@@ -48,9 +48,9 @@ router.get('/employees/random', async (req, res) => {
 
 router.get('/employees/:id', async (req, res) => {
   try {
-    const dep = await Employee.findById(req.params.id);
-    if(!dep) res.status(404).json({ message: 'Not found' });
-    else res.json(dep);
+    const emp = await Employee.findById(req.params.id);
+    if(!emp) res.status(404).json({ message: 'Not found' });
+    else res.json(emp);
   }
   catch(err) {
     res.status(500).json({ message: err });
