@@ -167,6 +167,31 @@ describe('Employee', () => {
 
   });
 
+  describe('Checking populate', () => {
+  
+    beforeEach(async () => {
+      const testEmpOne = new Employee({ firstName: 'John', lastName: 'Doe', department: salesDepartmentId });
+      await testEmpOne.save();
+  
+      const testEmpTwo = new Employee({ firstName: 'Jane', lastName: 'Doe', department: hrDepartmentId });
+      await testEmpTwo.save();
+    });
+  
+    it('should properly populate the department field', async () => {
+      const employees = await Employee.find().populate('department');
+      employees.forEach(employee => {
+        expect(employee.department).to.not.be.null;
+        expect(employee.department).to.have.property('name');
+      });
+    });
+  
+    afterEach(async () => {
+      await Employee.deleteMany();
+    });
+  
+  });
+  
+
   after(async () => {
     try {
       await Department.deleteMany();
